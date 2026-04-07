@@ -1,0 +1,10 @@
+CC = gcc
+target = animal.exe
+objects = dog.o turtle.o blackcow.o main.o
+
+$(target): $(objects)
+	$(CC) -o $(target) $(objects)
+
+.PHONY : clean
+clean :
+	rm -f $(objects) $(target)
