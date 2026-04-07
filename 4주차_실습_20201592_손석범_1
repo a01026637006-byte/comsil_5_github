@@ -1,0 +1,27 @@
+#!/bin/sh
+
+DATA_FILE="$HOME/mydata"
+
+if [ "$#" -lt 1 ]; then
+    echo "Usage: $0 string [string ...]" >&2
+    exit 1
+fi
+
+pattern=""
+
+for arg in "$@"; do
+    if [ "$arg" != "|" ]; then
+        if [ -z "$pattern" ]; then
+            pattern="$arg"
+        else
+            pattern="${pattern}|${arg}"
+        fi
+    fi
+done
+
+if [ -z "$pattern" ]; then
+    echo "Usage: $0 string [string ...]" >&2
+    exit 1
+fi
+
+egrep "($pattern)" "$DATA_FILE" | awk -f ./display.awk
